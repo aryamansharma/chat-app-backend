@@ -1,0 +1,28 @@
+{
+  "name": "chat-app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryamansharma/chat-app-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aryamansharma/chat-app-backend/issues"
+  },
+  "homepage": "https://github.com/aryamansharma/chat-app-backend#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "moment": "^2.30.1",
+    "mongodb": "^6.19.0"
+  }
+}
