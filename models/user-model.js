@@ -27,7 +27,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minLength: [6, 'Password should be of length 6']
+        minLength: [6, 'Password should be minimum of length 6'],
+        select: false,
+        trim: true
     },
     profilePicture: {
         type: Buffer
@@ -40,7 +42,13 @@ const userSchema = mongoose.Schema({
             },
             message: 'Please Enter a valid date in DD/MM/YYYY format'
         }
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
