@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const moment = require('moment');
+const bcrypt = require('bcrypt');
+const jsonwebtoken = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -49,6 +51,43 @@ const userSchema = mongoose.Schema({
             required: true
         }
     }]
+});
+
+// Instance methods
+
+userSchema.methods.generateToken = async function () {
+    const user = this;
+
+    const jwt = await jsonwebtoken.sign({ _id: user._id }, process.env.SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN
+    });
+
+    user.tokens.push({ token: jwt });
+    return jwt;
+}
+
+
+userSchema.methods.comparePassword = async function (password) {
+    const user = this;
+    return await bcrypt.compare(password, user.password);
+}
+
+userSchema.methods.hideResponse = function () {
+    const user = this;
+
+    user.password = undefined;
+    user.tokens = undefined;
+}
+
+// Document middlewares
+
+// Hashing the user password
+userSchema.pre('save', async function (next) {
+    const user = this;
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 12);
+    }
+    next();
 });
 
 const User = mongoose.model('User', userSchema);

@@ -5,8 +5,12 @@ const router = express.Router();
 const userControllers = require('../controllers/user-controller');
 
 // refactoring controllers
-const { getUsers, createUser } = userControllers;
+const { getUsers, loginUser, signupUser, deleteUser } = userControllers;
 
-router.route('/').get(getUsers).post(createUser);
+router.route('/').get(getUsers);
+router.route('/login').post(loginUser);
+router.route('/signUp').post(signupUser);
+
+router.route('/:id').delete(deleteUser);
 
 module.exports = router;
